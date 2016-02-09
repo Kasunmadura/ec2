@@ -1,0 +1,20 @@
+- name: start instances
+  hosts: localhost
+  connection: local
+  gather_facts: True
+  vars:
+    count: 1
+    region: us-east-1
+  user: ubuntu
+  sudo: no
+  tasks:
+    - name: start instances 
+      ec2:
+        state: running
+        instance_ids: i-0d319d8d
+        region: "{{ region }}"
+        wait: True
+
+    - name: Get public ip instances 
+      shell: sh /root/ec2-script/showip.sh | slacker -c core-development
+#      shell: aws ec2 describe-instances --instance-ids i-0d319d8d | grep PublicDnsName

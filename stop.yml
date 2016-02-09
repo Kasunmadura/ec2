@@ -1,0 +1,18 @@
+- name: Stop instances
+  hosts: localhost
+  connection: local
+  gather_facts: True
+  vars:
+    count: 1
+    region: us-east-1
+  user: ubuntu
+  sudo: no
+  tasks:
+    - name: Stop instances 
+      ec2:
+        state: stopped
+        instance_ids: i-0d319d8d
+        region: "{{ region }}"
+        wait: True
+    - name: Srop notice
+      shell: sh /root/ec2-script/stopnotice.sh | slacker -c core-development
